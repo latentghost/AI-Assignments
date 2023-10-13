@@ -1,7 +1,3 @@
-from numpy import random
-random.seed(456)
-
-
 locations_weather_based = {
     'Agra': {'W': 'summer', 'A': 17, 'T': 'getaway', 'B': 15000, 'R': 8.2},
     'Udaipur': {'W': 'summer', 'A': 17, 'T': 'getaway', 'B': 10000, 'R': 7.9},
@@ -87,7 +83,7 @@ def get_recommendations_activities(activity_broad, age, activity_type, budget):
     return recommendations
 
 
-def add_new_location():
+def add_new_destination():
     place_name = input("Enter name of new place: ")
     age = int(input(f"Enter suited age for {place_name}: "))
 
@@ -108,7 +104,6 @@ def add_new_location():
     else:
         new_location = input("Enter the name of the new location: ")
         new_location_activity = input("Enter the activity type (Theme Parks/Close to Nature/Adventure Sports): ")
-        new_location_age = int(input("Enter the minimum age requirement: "))
         new_location_budget = int(input("Enter the estimated budget (max 100000): "))
 
         invalid = 0
@@ -133,20 +128,15 @@ def add_new_location():
 
         locations_activity_based[new_location] = {
             'Ac': new_location_activity,
-            'Ag': new_location_age,
+            'Ag': age,
             'B': new_location_budget,
             'T': new_location_type,
             'R': round(new_location_rating, 1)
         }
 
 
-
-if __name__ == "__main__":
-    name = input('Enter your name: ')
-    print(f'\nHello {name}')
-    print('Welcome to the Travel Recommendation System\n')
-
-    age = int(input('What is your age: '))
+def recommend_destination():
+    age = int(input('Enter your age: '))
     
     if age > 16:
         print('\nWhat weather choice would you like?')
@@ -171,13 +161,13 @@ if __name__ == "__main__":
                 ans = input()
 
                 if(ans.lower()=='yes'):
-                    add_new_location()
+                    add_new_destination()
             
             else:
                 print('Here are some places you can visit:')
                 for item in places:
                     print(item[0] + ": " + str(item[1]))
-                    
+
         else:
             print('\nWhat kind of a location would you prefer?')
             print('1. coastal')
@@ -194,7 +184,7 @@ if __name__ == "__main__":
                 ans = input()
 
                 if(ans.lower()=='yes'):
-                    add_new_location()
+                    add_new_destination()
             
             else:
                 print('Here are some places you can visit:')
@@ -239,9 +229,62 @@ if __name__ == "__main__":
             ans = input()
 
             if(ans.lower()=='yes'):
-                add_new_location()
+                add_new_destination()
         
         else:
             print('Here are some places you can visit:')
             for item in places:
                 print(item[0] + ": " + str(item[1]))
+
+
+
+def add_feedback():
+    print("What place would you like to rate?")
+    place_name = input()
+
+    if(place_name not in locations_weather_based.keys() or place_name not in locations_activity_based.keys()):
+        print("This location is not in our catalogue. Would you like to add this as a new destination? (Yes/No)")
+        ans = input()
+
+        if(ans.lower()=="yes"):
+            add_new_destination()
+        elif(ans.lower()=="no"):
+            return
+        else:
+            print("Invalid choice\n")
+
+    else:
+        new_user_rating = float(input("Enter your rating for this place (0 to 10): "))
+        if(place_name in locations_weather_based.keys()):
+            locations_weather_based[place_name]['R'] = round(locations_weather_based[place_name]['R']*0.9 + new_user_rating*0.1, 1)
+        elif(place_name in locations_activity_based.keys()):
+            locations_activity_based[place_name]['R'] = round(locations_activity_based[place_name]['R']*0.9 + new_user_rating*0.1, 1)
+        print("Rating updated!")
+
+
+
+if __name__ == "__main__":
+    name = input('Enter your name: ')
+    print(f'\nHello {name}')
+    print('Welcome to the Travel Recommendation System\n')
+
+    while(True):
+        print("What would you like to do?")
+        print("1. Search for a Holiday Destination")
+        print("2. Add rating for holiday destination")
+        print("3. Add a new Holiday Destination to the catalogue")
+        print("4. Exit")
+        choice = int(input("Enter your choice (1/2/3/4): "))
+
+        if(choice==1):
+            recommend_destination()
+        elif(choice==2):
+            add_feedback()
+        elif(choice==3):
+            add_new_destination()
+        elif(choice==4):
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice\nAborting...")
+            break

@@ -1,4 +1,4 @@
-alcohol,malicacid,ash,alcalinity_of_ash,magnesium,total_phenols,flavanoids,nonflavanoid_phenols,proanthocyanins,color_intensity,hue,0D280_0D315_of_diluted_wines,proline,class
+alcohol,malicacid,ash,alcalinity,Mg,phenols,flav,nonflav,proantho,clr_intensity,hue,0D280_0D315,proline,class
 2.0,1.0,2.0,2.0,7.0,3.0,5.0,1.0,4.0,4.0,2.0,5.0,8.0,1
 1.0,1.0,2.0,0.0,3.0,3.0,5.0,1.0,1.0,3.0,2.0,4.0,8.0,1
 1.0,1.0,3.0,4.0,4.0,3.0,6.0,1.0,5.0,4.0,2.0,4.0,9.0,1

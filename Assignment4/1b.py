@@ -15,9 +15,9 @@ y_true = 23 * X + 43 + eps
 ## consider all X[0] = 1 for the bias 
 X_bias = np.vstack([np.ones(len(X)), X]).T
 
-
+## initialize all weights
 weights = np.random.rand(2)
-learning_rate = 0.014
+learning_rate = 0.005
 num_iterations = 100
 
 ## gradient descent for 100 iterations
@@ -27,7 +27,7 @@ for iteration in range(num_iterations):
     error = y_pred - y_true
 
     ## updatuion of weights
-    gradient = np.dot(X_bias.T, error) / len(X)
+    gradient = 2*(np.dot(X_bias.T, error)/len(X))
     weights -= learning_rate * gradient
 
     ## calculate loss = MSE
